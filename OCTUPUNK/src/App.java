@@ -1,14 +1,21 @@
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class App {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("OCTOPUNK");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1440, 1024);
+        frame.setSize(1080, 720);
         frame.setLayout(new BorderLayout());
 
         // Icons
@@ -71,6 +78,10 @@ public class App {
         bottomPanel.add(creditsButton);
         frame.add(bottomPanel, BorderLayout.SOUTH);
 
+        String filePath = "Music/Fatality.wav"; 
+        playSound(filePath, 0.1f);
+
+
         frame.setVisible(true);
     }
 
@@ -89,4 +100,27 @@ public class App {
             }
         };
     }
+
+     private static void playSound(String filePath, float volume) {
+        try {
+            File soundFile = new File(filePath);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+
+            AudioFormat format = audioInputStream.getFormat();
+            DataLine.Info info = new DataLine.Info(Clip.class, format);
+            Clip clip = (Clip) AudioSystem.getLine(info);
+
+            clip.open(audioInputStream);
+
+            // Adjust volume using FloatControl
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            float dB = (float) (Math.log(volume) / Math.log(10.0) * 20.0);
+            gainControl.setValue(dB);
+
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
+
