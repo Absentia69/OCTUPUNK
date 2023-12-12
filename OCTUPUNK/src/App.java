@@ -147,6 +147,77 @@ creditsButton.addActionListener(new ActionListener() {
     }
 });
 
+// Inside your ActionListener for the "Settings" button
+gearButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+       // Create a dialog
+        JDialog settingsDialog = new JDialog();
+        settingsDialog.setTitle("Settings");
+
+        // Create buttons for video, audio, and controls
+        JButton videoButton = new JButton();
+        ImageIcon monitorIcon = resizeIcon(new ImageIcon("Images/monitor.png"), 20, 20);
+        videoButton.setIcon(monitorIcon);
+        videoButton.setText("Video");
+
+        JButton audioButton = new JButton();
+        ImageIcon stereoIcon = resizeIcon(new ImageIcon("Images/stereo.png"), 20, 20);
+        audioButton.setIcon(stereoIcon);
+        audioButton.setText("Audio");
+
+        JButton controlsButton = new JButton();
+        ImageIcon keyboardIcon = resizeIcon(new ImageIcon("Images/keyboard.png"), 20, 20);
+        controlsButton.setIcon(keyboardIcon);
+        controlsButton.setText("Controls");
+
+        // Set button properties
+        videoButton.setPreferredSize(new Dimension(200, 60)); // Adjust button size as needed
+        audioButton.setPreferredSize(new Dimension(200, 60));
+        controlsButton.setPreferredSize(new Dimension(200, 60));
+
+        // Add action listeners to buttons (adjust the action accordingly)
+        videoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Handle video settings action
+                System.out.println("Video settings clicked");
+            }
+        });
+
+        audioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Handle audio settings action
+                System.out.println("Audio settings clicked");
+            }
+        });
+
+        controlsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Handle controls settings action
+                System.out.println("Controls settings clicked");
+            }
+        });
+
+        // Create a panel to hold the buttons
+        JPanel buttonsPanel = new JPanel(new GridLayout(3, 1, 10, 10)); // 3 buttons vertically
+
+        // Add buttons to the panel
+        buttonsPanel.add(videoButton);
+        buttonsPanel.add(audioButton);
+        buttonsPanel.add(controlsButton);
+
+        // Add the panel to the dialog's content pane
+        settingsDialog.getContentPane().add(buttonsPanel);
+
+        // Set dialog properties
+        settingsDialog.pack();
+        settingsDialog.setLocationRelativeTo(frame); // Set dialog position relative to main frame
+        settingsDialog.setVisible(true);
+    }
+});
 
 
 
