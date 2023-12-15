@@ -15,7 +15,6 @@ import java.util.Random;
 public class App {
 
     private static Clip clip;
-    private static String currentSongFilePath;
     public static void main(String[] args) {
 
     JFrame frame = new JFrame("OCTOPUNK");
@@ -56,14 +55,14 @@ public class App {
 
     // Panel for the buttons (occupying the whole row)
     JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 10, 10)); // 4 buttons aligned vertically
-
+    
     // Adjusting buttons to smaller size
 
     JButton button1 = new JButton("NEW GAME");
     JButton button2 = new JButton("CONTINUE");
     JButton button3 = new JButton("LEVELS");
     JButton button4 = new JButton("GUIDE");
-
+    
     resizeButton(button4, 120, 40);
     resizeButton(button3, 120, 40);
     resizeButton(button2, 120, 40);
@@ -133,7 +132,7 @@ creditsButton.addActionListener(new ActionListener() {
         creditsDialog.setTitle("Credits");
 
         // Create a JTextArea for displaying names
-        JTextArea namesArea = new JTextArea("MERAH Mohamed Lamine\nBELHADJI Rafik\nMohamed\nAsma");
+        JTextArea namesArea = new JTextArea("MERAH Mohamed Lamine\nAsma");
         namesArea.setEditable(false); // Make it non-editable
         namesArea.setMargin(new Insets(10, 10, 10, 10)); // Add some margin for better appearance
 
@@ -204,6 +203,7 @@ gearButton.addActionListener(new ActionListener() {
         // Create a panel to hold the buttons
         JPanel buttonsPanel = new JPanel(new GridLayout(3, 1, 10, 10)); // 3 buttons vertically
 
+        videoButton.setSize(new Dimension(20, 20));
         // Add buttons to the panel
         buttonsPanel.add(videoButton);
         buttonsPanel.add(audioButton);
@@ -255,7 +255,8 @@ gearButton.addActionListener(new ActionListener() {
 
         if (files != null && files.length > 0) {
             Random random = new Random();
-            int randomIndex = random.nextInt(files.length);
+            int randomIndex = random.nextInt(files.length) ;
+            System.out.println("Now playing:" + files[randomIndex]);
             return files[randomIndex].getAbsolutePath();
         } else {
             System.out.println("No WAV files found in the directory: " + directoryPath);
@@ -290,7 +291,6 @@ gearButton.addActionListener(new ActionListener() {
             System.out.println("Master Gain control not supported.");
         }
 
-        currentSongFilePath = filePath;
         // Add listener to play next song when the current song ends
         clip.addLineListener(event -> {
             if (event.getType() == LineEvent.Type.STOP && volume != 0.0f) {
